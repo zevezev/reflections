@@ -1,4 +1,9 @@
 import { Box } from "@mui/material";
+import dynamic from "next/dynamic";
+
+// I need to lazy load the content in because Next pre-imports things before the window is loaded
+// and p5 depends on the window.
+const Content = dynamic(() => import("./Content"), { ssr: false });
 
 const HomeContent: React.FC = () => {
   return (
@@ -11,18 +16,7 @@ const HomeContent: React.FC = () => {
       paddingTop="2rem"
     >
       <h1>Reflections</h1>
-
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        bgcolor="red"
-        width="20rem"
-        height="10rem"
-        marginTop="8rem"
-      >
-        <h2> Content</h2>
-      </Box>
+      <Content />
     </Box>
   );
 };

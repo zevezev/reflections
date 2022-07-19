@@ -7,7 +7,7 @@ const Home: NextPage = () => {
   return (
     <RootBox>
       <Head>
-        <title>BAY PEDALS</title>
+        <title>Reflections</title>
       </Head>
       <HomeContent />
     </RootBox>
@@ -19,6 +19,7 @@ const RootBox = styled("div")({
   overflow: "hidden",
   display: "flex",
   flex: "1",
+  background: "lightblue",
 });
 
 export default Home;
