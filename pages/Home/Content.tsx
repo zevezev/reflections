@@ -1,9 +1,9 @@
 import Sketch from "react-p5";
 import { Diamond } from "../../components/diamond";
 import { Room } from "../../components/room.js";
-import { Mirror } from "../../components/mirror.ts";
-import { Ray } from "../../components/ray.js";
-import { Viewer } from "../../components/viewer.ts";
+import { Mirror } from "../../components/mirror";
+import { Ray } from "../../components/ray";
+import { Viewer } from "../../components/viewer";
 import p5Types from "p5";
 
 let x = 50;
@@ -60,9 +60,9 @@ const Content = () => {
 
     const buildDoubleMirrorRoom = () => {
       const roomWidth = 600;
-      const roomHeight = 250;
+      const roomHeight = 130;
       const roomX = canvasWidth / 2 - roomWidth / 2;
-      const roomY = canvasHeight / 2 + 100;
+      const roomY = canvasHeight - roomHeight - 10;
 
       const diamondX = roomX + (roomWidth * 3) / 4;
       const diamondY = roomY + (roomHeight * 1) / 2;
@@ -73,7 +73,7 @@ const Content = () => {
       const diamondRadius = 40;
       const mirrorDiamondX = diamondX;
       const mirrorDiamondY = roomY - (diamondY - roomY) - diamondRadius / 2;
-      const numReflections = 3;
+      const numReflections = 6;
       room = new Room(roomX, roomY, roomWidth, roomHeight);
       mirrors.push(new Mirror(roomX, roomY, roomX + roomWidth, roomY));
       mirrors.push(
@@ -94,7 +94,8 @@ const Content = () => {
         roomHeight
       );
       ray = new Ray(viewer, mirrorDiamondX, mirrorDiamondY, mirrors);
-      const setTarget = (x, y) => ray.setTarget(x, y);
+      const setTarget = (x, y, numReflections) =>
+        ray.setTarget(x, y, numReflections);
       diamond = new Diamond(diamondX, diamondY, diamondRadius, () => {});
       for (let i = 0; i < numReflections; i++) {
         mirrorDiamonds.push(
@@ -102,7 +103,8 @@ const Content = () => {
             diamondX,
             diamondY - (i + 1) * 2 * (diamondY - roomY),
             diamondRadius,
-            setTarget
+            setTarget,
+            i + 1
           )
         );
       }
@@ -112,13 +114,13 @@ const Content = () => {
   };
 
   const draw = (p5: p5Types) => {
-    p5.background(255);
+    p5.background(200);
     room?.show(p5);
 
     //TODO: find intersection of ray and mirror, then create the ray to the diamond
 
-    // ray.update();
-    // ray.show(p5);
+    ray?.update();
+    ray?.show(p5);
 
     viewer?.over(p5);
     viewer?.update(p5);

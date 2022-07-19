@@ -1,9 +1,10 @@
 export class Diamond {
-  constructor(x, y, radius, setTarget) {
+  constructor(x, y, radius, setTarget, reflectionIndex = 1) {
     this.x = x;
     this.y = y;
     this.radius = radius;
     this.setTarget = setTarget;
+    this.reflectionIndex = reflectionIndex;
   }
   show(p5) {
     p5.strokeWeight(3);
@@ -20,7 +21,7 @@ export class Diamond {
       p5.mouseY > this.y - this.radius &&
       p5.mouseY < this.y + this.radius
     ) {
-      this.setTarget(this.x, this.y);
+      this.setTarget(this.x, this.y, this.reflectionIndex);
     }
   }
 }
