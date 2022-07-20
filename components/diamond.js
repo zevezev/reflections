@@ -21,8 +21,6 @@ export class Diamond {
     p5.endShape();
   }
   pressed(p5) {
-    // Did I click on the rectangle?
-    //TODO: use the actual shape of the ojbect
     if (
       p5.mouseX > this.x - this.radius &&
       p5.mouseX < this.x + this.radius &&

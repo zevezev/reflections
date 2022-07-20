@@ -129,9 +129,6 @@ const Content = ({ simNumber = SimKey.ONE_MIRROR }: { simNumber?: SimKey }) => {
     const draw = (p5: p5Types) => {
       p5.background("lightblue");
       room?.show(p5);
-
-      //TODO: find intersection of ray and mirror, then create the ray to the diamond
-
       ray?.update();
       ray?.show(p5);
 
