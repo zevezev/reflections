@@ -16,7 +16,7 @@ const HomeContent: React.FC = () => {
       paddingLeft="10rem"
       paddingRight="10rem"
     >
-      <h1>Mirrors, Light, and Perspective</h1>
+      <h1>Reflections</h1>
       <Box>
         1. You're in a room with a mirror and a diamond. You're looking at the
         diamond in the mirror. Try moving the eye around to see how the light
