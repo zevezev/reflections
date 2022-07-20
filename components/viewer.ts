@@ -21,7 +21,6 @@ export class Viewer {
     this.rollover = false; // Is the mouse over the ellipse?
     this.x = x;
     this.y = y;
-    //TODO: use constants
     this.w = 80;
     this.h = 40;
     this.offsetX = 0;
@@ -97,7 +96,6 @@ export class Viewer {
       p5.mouseY < this.y + this.h
     ) {
       this.dragging = true;
-      //TODO: use room as bounding box
       // If so, keep track of relative location of click to corner of rectangle
       this.offsetX = this.x - p5.mouseX;
       this.offsetY = this.y - p5.mouseY;

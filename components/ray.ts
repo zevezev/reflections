@@ -48,7 +48,6 @@ export class Ray {
       currentEndPtX = newEndPtX;
       currentEndPtY = newEndPtY;
     }
-    //TODO: get diamond radius from constants file
     p5.line(currentEndPtX, currentEndPtY, this.diamondX, this.diamondY);
     p5.stroke("yellow");
     p5.line(this.reflectionPointX, this.mirrorY, this.targetX, this.targetY);
