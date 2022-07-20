@@ -22,7 +22,7 @@ export class Viewer {
     this.x = x;
     this.y = y;
     //TODO: use constants
-    this.w = 40;
+    this.w = 80;
     this.h = 40;
     this.offsetX = 0;
     this.offsetY = 0;
@@ -42,7 +42,9 @@ export class Viewer {
       p5.mouseY < this.y + this.h
     ) {
       this.rollover = true;
+      p5.cursor("grab");
     } else {
+      if (this.rollover === true) p5.cursor("auto");
       this.rollover = false;
     }
   }
@@ -64,14 +66,26 @@ export class Viewer {
   show(p5: p5Types) {
     p5.stroke(0);
     // Different fill based on state
-    if (this.dragging) {
-      p5.fill(50);
-    } else if (this.rollover) {
-      p5.fill(100);
-    } else {
-      p5.fill(175, 200);
-    }
+
+    p5.stroke(0, 0, 0, 0);
+    p5.fill(0, 0, 0, 0);
     p5.rect(this.x, this.y, this.w, this.h);
+    if (this.dragging) {
+      p5.stroke("green");
+      p5.cursor("grab");
+    } else if (this.rollover) {
+      p5.stroke("lightgreen");
+      p5.cursor("grab");
+    } else {
+      p5.stroke(0);
+    }
+    p5.fill(255);
+    p5.ellipse(this.x + this.w / 2, this.y + this.h / 2, this.w, this.h);
+    p5.fill("brown");
+    p5.stroke(0);
+    p5.ellipse(this.x + this.w / 2, this.y + this.h / 2, this.w / 2);
+    p5.fill(0);
+    p5.ellipse(this.x + this.w / 2, this.y + this.h / 2, this.w / 4);
   }
 
   pressed(p5: p5Types) {
@@ -90,9 +104,10 @@ export class Viewer {
     }
   }
 
-  released() {
+  released(p5) {
     // Quit dragging
     this.dragging = false;
+    p5.cursor("auto");
   }
   getX() {
     return this.x;

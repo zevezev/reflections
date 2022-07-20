@@ -19,16 +19,15 @@ export class Ray {
     this.targetY = targetY;
     this.mirrors = mirrors;
     this.mirrorY = mirrors[0].getCoords()[1];
-    this.mirror2Y = mirrors[1].getCoords()[1];
+    this.mirror2Y = mirrors[1]?.getCoords()[1] || 0;
     this.slope = 0;
     this.reflectionPointX;
-    //TODO: don't calculate this way
     this.diamondY = 2 * mirrors[0].getCoords()[1] - targetY;
     this.diamondX = targetX;
     this.numReflections = numReflections;
   }
   show(p5) {
-    p5.stroke("blue");
+    p5.stroke("orange");
     //dumb version that only works for horizontal lines but saves me from solving the
     //system of equations for line intersections
     let currentStartPtX = this.viewer.getX() + this.viewer.getW() / 2;
@@ -50,7 +49,7 @@ export class Ray {
       currentEndPtY = newEndPtY;
     }
     //TODO: get diamond radius from constants file
-    p5.line(currentEndPtX, currentEndPtY, this.diamondX, this.diamondY - 20);
+    p5.line(currentEndPtX, currentEndPtY, this.diamondX, this.diamondY);
     p5.stroke("yellow");
     p5.line(this.reflectionPointX, this.mirrorY, this.targetX, this.targetY);
   }
