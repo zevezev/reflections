@@ -3,9 +3,11 @@ import dynamic from "next/dynamic";
 
 // I need to lazy load the content in because Next pre-imports things before the window is loaded
 // and p5 depends on the window.
-const Content = dynamic(() => import("./Content"), { ssr: false });
-
+let Content;
 const HomeContent: React.FC = () => {
+  if (typeof window !== "undefined")
+    Content = dynamic(() => import("./Content"), { ssr: false });
+
   return (
     <Box
       flex="1"
@@ -16,7 +18,7 @@ const HomeContent: React.FC = () => {
       paddingTop="2rem"
     >
       <h1>Reflections</h1>
-      <Content />
+      {!!Content && <Content />}
     </Box>
   );
 };
