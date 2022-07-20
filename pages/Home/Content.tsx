@@ -137,7 +137,7 @@ const Content = ({ simNumber = SimKey.ONE_MIRROR }: { simNumber?: SimKey }) => {
       viewer?.show(p5);
       diamond?.show(p5);
       mirrorDiamonds?.forEach((diamond) => {
-        diamond.over(p5);
+        if (mirrorDiamonds.length > 1) diamond.over(p5);
         diamond.show(p5);
       });
       mirrors?.forEach((mirror) => mirror.show(p5));
