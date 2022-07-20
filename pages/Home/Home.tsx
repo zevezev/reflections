@@ -18,17 +18,18 @@ const HomeContent: React.FC = () => {
     >
       <h1>Mirrors, Light, and Perspective</h1>
       <Box>
-        1. You're in a room with a mirror and a diamond. You look at the diamond
-        in the mirror. Try moving the eye around to see how the light travels
-        from the diamond into it. The light always makes equal incoming and
-        outgoing angles with the mirror, no matter where you are in the room.
+        1. You're in a room with a mirror and a diamond. You're looking at the
+        diamond in the mirror. Try moving the eye around to see how the light
+        travels from the diamond into it. Notice how the light coming from the
+        diamond bounces off the mirror into your eye - it always makes equal
+        incoming and outgoing angles!
       </Box>
       <Content />
       <Box>
         2. The room now has 2 mirrors, and infinite reflections of diamonds! Try
-        clicking on one of the diamond reflection to see the path the light
-        travels when you look at it. Notice how it appears far away because the
-        light takes a longer path.
+        clicking on the diamond's reflections to see the path the light travels
+        when you look at it. Notice how it appears far away because the light
+        takes a longer path.
       </Box>
       <Content simNumber={SimKey.TWO_MIRRORS} />
     </Box>
