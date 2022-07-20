@@ -12,7 +12,7 @@ export class Mirror {
     this.y2 = y2;
   }
   show(p5: p5Types) {
-    p5.stroke("lightblue");
+    p5.stroke("blue");
     p5.strokeWeight(3);
     p5.line(this.x, this.y, this.x2, this.y2);
   }

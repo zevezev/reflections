@@ -7,9 +7,14 @@ import { Viewer } from "../../components/viewer";
 import p5Types from "p5";
 import dynamic from "next/dynamic";
 
-let x = 50;
-let y = 50;
-const Content = () => {
+export enum SimKey {
+  ONE_MIRROR,
+  TWO_MIRRORS,
+}
+
+const Content = ({ simNumber = SimKey.ONE_MIRROR }: { simNumber?: SimKey }) => {
+  // I need to lazy load the content in because Next pre-imports things before the window is loaded
+  // and p5 depends on the window
   if (typeof window !== "undefined") {
     const Sketch = dynamic(() => import("react-p5"));
     //mvp: the viewer is the mouse. we calculate the vector from the diamond to the mouse to get the angle shape
@@ -33,7 +38,7 @@ const Content = () => {
         const roomWidth = 600;
         const roomHeight = 250;
         const roomX = canvasWidth / 2 - roomWidth / 2;
-        const roomY = canvasHeight / 2;
+        const roomY = canvasHeight / 2 - roomHeight / 2;
 
         const diamondX = roomX + (roomWidth * 3) / 4;
         const diamondY = roomY + (roomHeight * 1) / 2;
@@ -43,7 +48,7 @@ const Content = () => {
 
         const diamondRadius = 40;
         const mirrorDiamondX = diamondX;
-        const mirrorDiamondY = roomY - (diamondY - roomY) - diamondRadius / 2;
+        const mirrorDiamondY = 2 * roomY - diamondY;
         room = new Room(roomX, roomY, roomWidth, roomHeight);
         mirrors.push(new Mirror(roomX, roomY, roomX + roomWidth, roomY));
         diamond = new Diamond(diamondX, diamondY, diamondRadius, () => {});
@@ -74,8 +79,7 @@ const Content = () => {
         const viewerY = roomY + (roomHeight * 1) / 2;
 
         const diamondRadius = 40;
-        const mirrorDiamondX = diamondX;
-        const mirrorDiamondY = roomY - (diamondY - roomY) - diamondRadius / 2;
+
         const numReflections = 6;
         room = new Room(roomX, roomY, roomWidth, roomHeight);
         mirrors.push(new Mirror(roomX, roomY, roomX + roomWidth, roomY));
@@ -96,7 +100,7 @@ const Content = () => {
           roomWidth,
           roomHeight
         );
-        ray = new Ray(viewer, mirrorDiamondX, mirrorDiamondY, mirrors);
+
         const setTarget = (x, y, numReflections) =>
           ray.setTarget(x, y, numReflections);
         diamond = new Diamond(diamondX, diamondY, diamondRadius, () => {});
@@ -111,13 +115,19 @@ const Content = () => {
             )
           );
         }
+        ray = new Ray(
+          viewer,
+          diamondX,
+          diamondY - 2 * (diamondY - roomY),
+          mirrors
+        );
       };
 
-      buildDoubleMirrorRoom();
+      simNumber === SimKey.ONE_MIRROR ? buildRoom() : buildDoubleMirrorRoom();
     };
 
     const draw = (p5: p5Types) => {
-      p5.background(200);
+      p5.background("lightblue");
       room?.show(p5);
 
       //TODO: find intersection of ray and mirror, then create the ray to the diamond
@@ -128,9 +138,11 @@ const Content = () => {
       viewer?.over(p5);
       viewer?.update(p5);
       viewer?.show(p5);
-
       diamond?.show(p5);
-      mirrorDiamonds?.forEach((diamond) => diamond.show(p5));
+      mirrorDiamonds?.forEach((diamond) => {
+        diamond.over(p5);
+        diamond.show(p5);
+      });
       mirrors?.forEach((mirror) => mirror.show(p5));
     };
 
@@ -140,8 +152,8 @@ const Content = () => {
       mirrorDiamonds.forEach((diamond) => diamond.pressed(p5));
     };
 
-    const mouseReleased = () => {
-      viewer.released();
+    const mouseReleased = (p5) => {
+      viewer.released(p5);
     };
 
     return (
