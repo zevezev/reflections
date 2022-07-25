@@ -70,7 +70,7 @@ const Content = ({ simNumber = SimKey.ONE_MIRROR }: { simNumber?: SimKey }) => {
         const roomWidth = 600;
         const roomHeight = 130;
         const roomX = canvasWidth / 2 - roomWidth / 2;
-        const roomY = canvasHeight - roomHeight - 10;
+        const roomY = canvasHeight - roomHeight - 120;
 
         const diamondX = roomX + (roomWidth * 3) / 4;
         const diamondY = roomY + (roomHeight * 1) / 2;
@@ -80,7 +80,7 @@ const Content = ({ simNumber = SimKey.ONE_MIRROR }: { simNumber?: SimKey }) => {
 
         const diamondRadius = 40;
 
-        const numReflections = 6;
+        const numReflections = 3;
         room = new Room(roomX, roomY, roomWidth, roomHeight);
         mirrors.push(new Mirror(roomX, roomY, roomX + roomWidth, roomY));
         mirrors.push(
